@@ -1,3 +1,15 @@
+Integrantes: Pedro Pablo Galli Solano, Roberto Plaza Orellana.
+
+Video de como ejecutar: https://youtu.be/xLRQ13eeL-o
+
+Instrucciones:
+1.Ubicarse en el repositorio desde la consola o terminal con el comando cd.
+2.Una vez ubicado en el repositorio, ejecutar uno de los siguientes comandos:
+  2.1 Si utilizas Yarn: yarn electron-dev
+  2.2 Si utilizas NPM: Npm run start
+3.Si ejecutaste mediante yarn, el sistema web se abrira automaticamente. Si ejecutaste mediante NPM, ingresa a la siguiente direccion: http://localhost:3000
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
