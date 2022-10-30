@@ -1,6 +1,7 @@
 import React, {useState} from "react";
+import { ToastContainer } from "react-toastify";
 import firebase from "./utils/Firebase";
-import 'firebase/compat/auth';
+import 'firebase/auth';
 import Auth from "./pages/Auth";
 import LoggedLayout from "./Layouts/LoggedLayout";
 
@@ -10,43 +11,42 @@ function App() {
 
 
  firebase.auth().onAuthStateChanged(currentUser => {
-    if(!currentUser) {
-      setUser(null);
-    } else {
-      setUser(currentUser);
-    }
-    setIsLoading(false);
+    
+  if(!currentUser?.emailVerified) {
+    firebase.auth().signOut();
+    setUser(null);
+  } else {
+    setUser(currentUser);
+  }
+  setIsLoading(false);
   });
 
   if (isLoading) {
     return null;
   }
   
-  return !user ? <Auth /> : <UserLogged/>;
+  
+
+return (
+  <>
+    {!user ? <Auth /> : <LoggedLayout user={user} />}
+    <ToastContainer
+      position="top-center"
+      autoClose={5000}
+      hideProgressBar
+      newestOnTop
+      closeOnClick
+      rtl={false}
+      puaseOnVisibilityChange
+      draggable
+      pauseOnHover={false}
+    />
+  </>
+);
 }
 
 
-function UserLogged() {
 
-const logout = () => {
-  firebase.auth.signOut();
-}
-
-  return (
-    <div 
-    style={{
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      flexDirection: "column",
-      height: "100vh" 
-    }}
-    >
-      <h1>Usuario Logueado</h1>
-      <button onClick={logout}>Cerrar Sesion</button>
-    </div>
-  );
-}
 
 
 export default App;

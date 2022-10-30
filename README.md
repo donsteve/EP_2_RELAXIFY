@@ -9,6 +9,9 @@ Instrucciones:
   2.2 Si utilizas NPM: Npm run start
 3.Si ejecutaste mediante yarn, el sistema web se abrira automaticamente. Si ejecutaste mediante NPM, ingresa a la siguiente direccion: http://localhost:3000
 
+*Se incluye el pdf de la entrega 3.4 con las ventajas y desventajas de backend y base de datos
+
+*Se modificaran los modulos de cancion y artistas, se reemplazara por genero musical y artistas.
 
 # Getting Started with Create React App
 
