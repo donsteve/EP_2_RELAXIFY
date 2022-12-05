@@ -1,35 +1,39 @@
-import React, {useState} from "react";
-import AuthOptions from "../../components/Auth/AuthOptions";
-import RegisterForm from "../../components/Auth/RegisterForm";
-import LoginForm from "../../components/Auth/LoginForm";
-import BackgroundAuth from "../../assets/jpg/background-auth.jpg";
-import LogoNameWhite  from "../../assets/png/logo-name-white.png";
-
+import React, { useState } from "react";
+import { Image } from "semantic-ui-react";
+import { AuthOptions, RegisterForm, LoginForm } from "../../components/Auth";
+import { logoNameWhite } from "../../assets";
 import "./Auth.scss";
 
+export function Auth() {
+  const [typeForm, setTypeForm] = useState(null);
 
-export default function Auth() {
-    const [selectedForm, setSelectedForm] = useState(null);
+  const openLogin = () => setTypeForm("login");
+  const openRegister = () => setTypeForm("register");
+  const goBack = () => setTypeForm(null);
 
-    const handlerForm = () => {
-        switch (selectedForm) {
-            case "login":
-                return <LoginForm setSelectedForm={setSelectedForm} />;
-            case "register":
-                return <RegisterForm setSelectedForm={setSelectedForm} />;
-            default:
-                return <AuthOptions setSelectedForm={setSelectedForm} />;
-        }
-    };
+  const renderForm = () => {
+    if (typeForm === "login") {
+      return <LoginForm openRegister={openRegister} goBack={goBack} />;
+    }
 
-    return (
-        <div className="auth" style={{ backgroundImage: `url(${BackgroundAuth})`}}>
-          <div className="auth__box">
-            <div className="auth_box-logo">
-                <img src={LogoNameWhite} alt="Relaxify" />
-            </div>
-            {handlerForm()}
-          </div>
-        </div>
-    );
-}  
+    if (typeForm === "register") {
+      return <RegisterForm openLogin={openLogin} goBack={goBack} />;
+    }
+
+    return <AuthOptions openLogin={openLogin} openRegister={openRegister} />;
+  };
+
+  return (
+    <div className="auth">
+      <div className="auth__content">
+        <Image
+          src={logoNameWhite}
+          alt="relaxify"
+          className="auth__content-logo"
+        />
+
+        {renderForm()}
+      </div>
+    </div>
+  );
+}

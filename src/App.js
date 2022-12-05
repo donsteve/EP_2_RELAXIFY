@@ -1,52 +1,24 @@
-import React, {useState} from "react";
-import { ToastContainer } from "react-toastify";
-import firebase from "./utils/Firebase";
-import 'firebase/auth';
-import Auth from "./pages/Auth";
-import LoggedLayout from "./Layouts/LoggedLayout";
+import { useState } from "react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { LoggedNavigation } from "./routes";
+import { Auth } from "./pages";
+import { PlayerProvider } from "./context";
 
-function App() {
-   const [user, setUser] = useState(null);
-   const [isLoading, setIsLoading] = useState(true);
+export default function App() {
+  const [user, setUser] = useState(undefined);
+  const auth = getAuth();
 
-
- firebase.auth().onAuthStateChanged(currentUser => {
-    
-  if(!currentUser?.emailVerified) {
-    firebase.auth().signOut();
-    setUser(null);
-  } else {
-    setUser(currentUser);
-  }
-  setIsLoading(false);
+  onAuthStateChanged(auth, (user) => {
+    setUser(user);
   });
 
-  if (isLoading) {
-    return null;
-  }
-  
-  
+  if (user === undefined) return null;
 
-return (
-  <>
-    {!user ? <Auth /> : <LoggedLayout user={user} />}
-    <ToastContainer
-      position="top-center"
-      autoClose={5000}
-      hideProgressBar
-      newestOnTop
-      closeOnClick
-      rtl={false}
-      puaseOnVisibilityChange
-      draggable
-      pauseOnHover={false}
-    />
-  </>
-);
+  return user ? (
+    <PlayerProvider>
+      <LoggedNavigation />
+    </PlayerProvider>
+  ) : (
+    <Auth />
+  );
 }
-
-
-
-
-
-export default App;

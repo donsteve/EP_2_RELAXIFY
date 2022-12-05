@@ -1,1 +1,1 @@
-export { default } from "./AuthOptions";
+export * from "./AuthOptions";
